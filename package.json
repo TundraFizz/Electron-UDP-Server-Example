@@ -1,5 +1,5 @@
 {
-  "name": "electron-server",
+  "name": "electron-udp-server-example",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -15,6 +15,6 @@
     "url": "https://github.com/TundraFizz/Tundra-Fizz"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "nodemon --exec \"electron .\""
   }
 }

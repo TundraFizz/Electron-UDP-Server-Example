@@ -3,22 +3,23 @@ var EmitMessage = require("electron").remote.app.emit;
 
 function SendMessage(func, data = null){
   EmitMessage("message", {
-    "function": func,
-    "data"    : JSON.stringify(data)
+    "f": func,
+    "d": data
   });
 }
 
-$("#testing").click(function(){
-  SendMessage("Testing", {"yolo": "swag"});
+ipc.on("message", (event, data) => {
+  var f = data.f;
+  var d = data.d;
+
+  console.log(f);
+  console.log(d);
 });
 
-$("#testing2").click(function(){
-  SendMessage("sdjkfhdf", {"qqqqqqqq": "wwwwwwww"});
-});
+$("#submit").click(function(){
+  var text = $("#text").val();
 
-ipc.on("message", (event, msg) => {
-  var func = msg.function;
-  var data = msg.data;
-  console.log(func);
-  console.log(data);
+  SendMessage("CreateRoom", {
+    "text": text
+  });
 });
