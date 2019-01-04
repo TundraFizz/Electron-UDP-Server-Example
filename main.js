@@ -65,11 +65,12 @@ server.on("listening", () => {
   console.log(`Listening on port ${server.address().port}`);
 });
 
-server.on("message", (message) => {
-  var data = JSON.parse(message.toString("utf-8"));
+server.on("message", (data) => {
+  data = JSON.parse(data.toString("utf-8"));
+  var dd = JSON.parse(data.d);
 
   try{
-    in_[data.f](data.d);
+    in_[data.f](dd);
   }catch(err){
     console.log(err);
     console.log(`ERROR: The function "${data.f}" doesn't exist`);
@@ -103,7 +104,10 @@ function UDP(func, data = null){
 
 in_.JoinRoom = (data) => {
   console.log("A player wants to join a room");
-  console.log(data);
+  console.log(data.name);
+  console.log(data.room);
+  gameRooms[data.room].push(data.name);
+  UDP("UpdateRooms", gameRooms);
 }
 
 out_.CreateRoom = (data) => {
